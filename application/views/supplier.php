@@ -3,9 +3,6 @@
         <div><br>
             <?php
             $role = $this->session->role;
-            $kondisi = $this->session->kondisi;
-            $jumlah_harga = $this->session->jumlah_harga;
-
             ?>
         </div>
         <div class="card bg-light mb-3 o-hidden border-0 shadow-lg my-5">
@@ -13,7 +10,7 @@
                 <ul class="nav nav-tabs card-header-tabs" role="tablist" id="myTab">
                     <li class="nav-item">
                         <a class="nav-link active bg-light" href="<?php echo base_url(); ?>libra">
-                            <h4>Daftar Barang</h4>
+                            <h4>Daftar Supplier</h4>
                         </a>
                     </li>
                 </ul>
@@ -32,12 +29,6 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <!-- end notifikasi -->
-                <?php if ($role == 2) { ?>
-                    <p align="right"><a href="<?php echo base_url(); ?>libra/create" class="btn btn-outline-primary ">Tambah Barang</a></p>
-                <?php } else if ($role == 1 && $kondisi != 0) { ?>
-                    <p align="right"><a href="<?php echo base_url(); ?>libra/pembelian" class="btn btn-outline-primary">Cek Pembelian</a></p>
-                <?php } ?>
                 <table class="table table-bordered">
                     <?php if (empty($libra)) : ?>
                         <div class="alert alert-danger" role="alert">
@@ -48,20 +39,12 @@
                     <?php if (!empty($libra)) :  ?>
                         <tr>
                             <th>ID</th>
+                            <th>ID Barang</th>
+                            <th>Nama Supplier</th>
+                            <th>No. HP</th>
+                            <th>Alamat</th>
                             <th>Jenis Barang</th>
-                            <th>Merk</th>
-                            <th>Ukuran</th>
-                            <th>Stok</th>
-                            <th>Harga</th>
-                            <?php if ($role == 1) { ?>
-                                <th>
-                                    <p align="center">Action</p>
-                                </th>
-                            <?php } else if ($role == 2) { ?>
-                                <th>
-                                    <p align="center">Action</p>
-                                </th>
-                            <?php } ?>
+                            <th>Action</th>
                         </tr>
                     <?php endif; ?>
                     <?php
@@ -69,31 +52,16 @@
                     foreach ($libra as $row) {
                         ?>
                         <tr>
+                            <td><?php echo $row->id_supplier; ?></td>
                             <td><?php echo $row->id_barang; ?></td>
-                            <td><?php echo $row->jenis_barang; ?></td>
-                            <td><?php echo $row->merk_barang; ?></td>
-                            <td><?php echo $row->ukuran; ?></td>
-                            <td><?php echo $row->stock; ?></td>
-                            <td><?php echo $row->harga; ?></td>
-                            <?php if ($role == 1) { ?>
+                            <td><?php echo $row->nama_supplier; ?></td>
+                            <td><?php echo $row->no_telp; ?></td>
+                            <td><?php echo $row->alamat; ?></td>
+                            <td><?php echo $row->jenis_supplier; ?></td>
+                            <?php if ($role == 2) { ?>
                                 <td>
                                     <p align="center">
-                                        <a href="<?php echo base_url(); ?>libra/beli/<?php echo $row->id_barang; ?>" class="btn btn-outline-primary">Beli</a>
-                                    </p>
-                                </td>
-                            <?php } else if ($role == 2  && $row->stock <= 20) { ?>
-                                <td>
-                                    <p align="center">
-                                        <a href="<?php echo base_url(); ?>libra/supplier/<?php echo $row->id_barang; ?>" class="btn btn-outline-warning btn-block">Tambah Stock</a>
-                                        <a href="<?php echo base_url(); ?>libra/delete/<?php echo $row->id_barang; ?>" class="btn btn-outline-danger btn-block" onclick="return confirm('Yakin?');">Hapus</a>
-                                    </p>
-                                </td>
-                                
-                            <?php } else if ($role == 2) { ?>
-                                <td>
-                                    <p align="center">
-                                        <a href="<?php echo base_url(); ?>libra/update/<?php echo $row->id_barang; ?>" class="btn btn-outline-success btn-block">Edit</a>
-                                        <a href="<?php echo base_url(); ?>libra/delete/<?php echo $row->id_barang; ?>" class="btn btn-outline-danger btn-block" onclick="return confirm('Yakin?');">Hapus</a>
+                                        <a href="<?php echo base_url(); ?>libra/update/<?php echo $row->id_barang; ?>" class="btn btn-outline-primary">Beli Barang</a>
                                     </p>
                                 </td>
                             <?php } ?>
@@ -103,6 +71,7 @@
                     ?>
                 </table>
                 <div class="btn-toolbar float-right">
+                    <a href="<?php echo base_url(); ?>libra" class="btn btn-outline-primary mr-2">Kembali</a>
                     <a href="<?php echo base_url(); ?>libra/logout" class="btn btn-outline-danger mr-2">Logout</a>
                     <!-- Menyembumnyikan button kembali di halaman utama -->
                     <?php if (!empty($this->input->post('keyword'))) : ?>

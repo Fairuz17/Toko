@@ -80,8 +80,14 @@ class libra_model extends CI_Model
     }
 
     public function getPembelian($nama_pembeli){
-        $query = $this->db->get_where('pembelian', ["nama_pembeli" => $nama_pembeli])->row();
-        return $this->db->get_where('barang', ["id_barang" => $query->id_barang] )->result();
+        $this->db->select("*");
+        $this->db->from('pembelian');
+        $this->db->where('nama_pembeli =', $nama_pembeli);
+        $this->db->join('barang', 'barang.id_barang = pembelian.id_barang');
+        // $query = $this->db->get_where('pembelian', ["nama_pembeli" => $nama_pembeli])->row();
+        $query = $this->db->get()->result();
+        // return $this->db->get_where('barang', ["id_barang" => $query->id_barang] )->result();
+        return $query;
     }
 
     public function getIdBuku($username)
@@ -99,9 +105,9 @@ class libra_model extends CI_Model
     public function tambah_totalbeli($nama_pembeli, $jumlah_harga, $jumlah_harga_temp)
     {
         $temp = $jumlah_harga_temp + $jumlah_harga;
-        $this->db->set('jumlah_harga', $temp);
+        $this->db->set('total_harga', $temp);
         $this->db->where('nama_pembeli', $nama_pembeli);
-        $this->db->update('user');
+        $this->db->update('pembelian');
     }
 
     public function tambah_jumlahbeli($nama_pembeli, $jumlah)
@@ -109,12 +115,18 @@ class libra_model extends CI_Model
         
         $this->db->set('jumlah_beli', $jumlah);
         $this->db->where('nama_pembeli', $nama_pembeli);
-        $this->db->update('user');
+        $this->db->update('pembelian');
     }
 
     public function insert_pembelian($data)
     {
         $this->db->insert('pembelian', $data);
+    }
+
+    public function del_pembelian($nama_pembeli)
+    {
+        $this->db->where('nama_pembeli', $nama_pembeli);
+        return $this->db->delete('pembelian');
     }
 
     public function kurangi_stock($id, $stock, $jumlah)
@@ -123,5 +135,13 @@ class libra_model extends CI_Model
         $this->db->set('stock', $temp);
         $this->db->where('id_barang', $id);
         $this->db->update('barang');
+    }
+
+    public function getAllSup()
+    {
+        $this->db->select('*');
+        $this->db->from('supplier');
+        $query = $this->db->get();
+        return $query->result();
     }
 }

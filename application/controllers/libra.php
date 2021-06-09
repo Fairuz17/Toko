@@ -22,6 +22,14 @@ class Libra extends CI_Controller
         $this->load->view('index', $data);
     }
 
+    public function supplier()
+    {
+        $title['title'] = 'Daftar Supplier Barang';
+        $data['libra'] = $this->libra_model->getAllSup();
+        $this->load->view('callbootstrap', $title);
+        $this->load->view('supplier', $data);
+    }
+
     public function create()
     {
         $title['title'] = 'Tambah Barang';
@@ -111,19 +119,20 @@ class Libra extends CI_Controller
     {
         $id = $this->input->post('id_barang');
         $jumlah = $this->input->post('jumlah');
-        $harga = $this->input->post('harga');
         $jumlah_harga = $this->input->post('jumlah_harga');
         $stock = $this->input->post('stock');
         $this->session->kondisi++;
 
         $nama_pembeli = $this->session->nama_pembeli;
-        $jumlah_harga_temp = $this->session->jumlah_harga;
+        // $jumlah_harga_temp = $this->session->jumlah_harga;
 
-        $this->libra_model->tambah_totalbeli($nama_pembeli, $jumlah_harga, $jumlah_harga_temp);
-        $this->libra_model->tambah_jumlahbeli($nama_pembeli, $jumlah);
+        // $this->libra_model->tambah_totalbeli($nama_pembeli, $jumlah_harga, $jumlah_harga_temp);
+        // $this->libra_model->tambah_jumlahbeli($nama_pembeli, $jumlah);
 
         $data['id_barang']=$id;
         $data['nama_pembeli']=$nama_pembeli;
+        $data['jumlah_beli']=$jumlah;
+        $data['total_harga']=$jumlah_harga;
         $this->libra_model->insert_pembelian($data);
 
         // $stock['jumlah'] = $this->input->post('jumlah');
@@ -131,6 +140,13 @@ class Libra extends CI_Controller
         // Mengisi flashdata dengan perintah sesuai
         $this->session->set_flashdata('flash', 'dibeli');
         redirect(base_url() . 'libra', 'refresh');
+    }
+
+    public function beli_sukses()
+    {
+        $nama_pembeli = $this->session->nama_pembeli;
+        $this->libra_model->del_pembelian($nama_pembeli);
+        $this->load->view('beli_sukses');
     }
 
     public function logout()

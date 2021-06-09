@@ -57,7 +57,7 @@ CREATE TABLE `pembelian` (
   `id_pembelian` int NOT NULL,
   `nama_pembeli` varchar(100) NOT NULL,
   `id_barang` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data untuk tabel `pembelian`
@@ -91,7 +91,7 @@ CREATE TABLE `supplier` (
   `nama_supplier` varchar(50) NOT NULL,
   `no_telp` int NOT NULL,
   `alamat` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 

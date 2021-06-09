@@ -4,8 +4,8 @@
             <?php
             $role = $this->session->role;
             $kondisi = $this->session->kondisi;
-            $jumlah_harga = $this->session->jumlah_harga;
-            $jumlah_beli = $this->session->jumlah_beli;
+            // $jumlah_harga = $this->session->jumlah_harga;
+            // $jumlah_beli = $this->session->jumlah_beli;
             ?>
         </div>
         <div class="card bg-light mb-3 o-hidden border-0 shadow-lg my-5">
@@ -37,8 +37,8 @@
                             <td><?php echo $row->jenis_barang; ?></td>
                             <td><?php echo $row->merk_barang; ?></td>
                             <td><?php echo $row->ukuran; ?></td>
-                            <td><?php echo $jumlah_beli; ?></td>
-                            <td><?php echo $jumlah_harga; ?></td>
+                            <td><?php echo $row->jumlah_beli; ?></td>
+                            <td><?php echo $row->total_harga; ?></td>
                         </tr>
                     <?php
                     }
@@ -47,7 +47,7 @@
                 <div class="btn-toolbar float-right">
                     <a href="<?php echo base_url(); ?>libra" class="btn btn-outline-warning mr-2" type="button">Kembali</a>
                     <!-- Button mengembalikan -->
-                    <a href="<?php echo base_url(); ?>libra/mengembalikan_process" class="btn btn-outline-primary mr-2">Kembalikan Buku</a>
+                    <a href="<?php echo base_url(); ?>libra/beli_sukses" class="btn btn-outline-primary mr-2">Beli</a>
                 </div>
             </div>
         </div>
